@@ -1,2 +1,219 @@
 <html>
+  <head>
+    <title>Priyesh Thakur - Cinematographer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&amp;family=Staatliches&amp;display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      .image-container:hover .overlay {
+        opacity: 1;
+        pointer-events: auto;
+      }
+      .image-container:hover {
+        cursor: pointer;
+      }
+      .fade-in {
+        opacity: 0;
+        transform: translateY(40px);
+        transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+      }
+      .fade-in.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    </style>
+  </head>
+  <body class="font-roboto px-4 sm:px-8 md:px-16 lg:px-24 xl:px-32">
+    <div class="container mx-auto text-center py-8">
+      <h1 class="text-2xl font-bold">PRIYESH THAKUR</h1>
+      <p class="text-sm">CINEMATOGRAPHER</p>
+      <nav class="mt-4">
+        <ul class="flex justify-center space-x-8 text-sm">
+          <li>
+            <a class="hover:underline" href="#"> Narrative </a>
+          </li>
+          <li>
+            <a class="hover:underline" href="#"> Music videos </a>
+          </li>
+          <li>
+            <a class="hover:underline" href="#"> Commercials </a>
+          </li>
+          <li>
+            <a class="hover:underline" href="#"> Info </a>
+          </li>
+          <li>
+            <a class="hover:underline" href="#"> Stills </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+    <div class="container mx-auto">
+      <img
+        alt="A woman sitting at a table looking down, with a dimly lit background and some framed pictures on the wall"
+        class="w-full"
+        src="https://placehold.co/1200x800"
+      />
+    </div>
+    <div class="container mx-auto py-8">
+      <h2
+        class="text-2xl font-staatliches text-center mb-8 uppercase font-bold"
+      >
+        Narrative
+      </h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-8">
+        <div class="relative image-container fade-in">
+          <img
+            alt="Gallery image 1"
+            class="w-full h-auto"
+            src="https://placehold.co/400x300"
+          />
+          <div
+            class="absolute top-0 left-0 w-full h-full bg-black bg-opacity-70 flex justify-center items-center opacity-0 transition-opacity duration-300 pointer-events-none overlay"
+          >
+            <div class="border border-white p-4 text-white">Lorem ipsum</div>
+          </div>
+        </div>
+        <div class="relative image-container fade-in">
+          <img
+            alt="Gallery image 2"
+            class="w-full h-auto"
+            src="https://placehold.co/400x300"
+          />
+          <div
+            class="absolute top-0 left-0 w-full h-full bg-black bg-opacity-70 flex justify-center items-center opacity-0 transition-opacity duration-300 pointer-events-none overlay"
+          >
+            <div class="border border-white p-4 text-white">Dolor sit</div>
+          </div>
+        </div>
+        <div class="relative image-container fade-in">
+          <img
+            alt="Gallery image 3"
+            class="w-full h-auto"
+            src="https://placehold.co/400x300"
+          />
+          <div
+            class="absolute top-0 left-0 w-full h-full bg-black bg-opacity-70 flex justify-center items-center opacity-0 transition-opacity duration-300 pointer-events-none overlay"
+          >
+            <div class="border border-white p-4 text-white">
+              Amet consectetur
+            </div>
+          </div>
+        </div>
+      </div>
+      <h2
+        class="text-2xl font-staatliches text-center mb-8 uppercase font-bold"
+      >
+        Music Videos
+      </h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-8">
+        <div class="relative image-container fade-in">
+          <img
+            alt="Gallery image 4"
+            class="w-full h-auto"
+            src="https://placehold.co/400x300"
+          />
+          <div
+            class="absolute top-0 left-0 w-full h-full bg-black bg-opacity-70 flex justify-center items-center opacity-0 transition-opacity duration-300 pointer-events-none overlay"
+          >
+            <div class="border border-white p-4 text-white">
+              Adipiscing elit
+            </div>
+          </div>
+        </div>
+        <div class="relative image-container fade-in">
+          <img
+            alt="Gallery image 5"
+            class="w-full h-auto"
+            src="https://placehold.co/400x300"
+          />
+          <div
+            class="absolute top-0 left-0 w-full h-full bg-black bg-opacity-70 flex justify-center items-center opacity-0 transition-opacity duration-300 pointer-events-none overlay"
+          >
+            <div class="border border-white p-4 text-white">Sed do</div>
+          </div>
+        </div>
+        <div class="relative image-container fade-in">
+          <img
+            alt="Gallery image 6"
+            class="w-full h-auto"
+            src="https://placehold.co/400x300"
+          />
+          <div
+            class="absolute top-0 left-0 w-full h-full bg-black bg-opacity-70 flex justify-center items-center opacity-0 transition-opacity duration-300 pointer-events-none overlay"
+          >
+            <div class="border border-white p-4 text-white">Eiusmod tempor</div>
+          </div>
+        </div>
+      </div>
+      <h2
+        class="text-2xl font-staatliches text-center mb-8 uppercase font-bold"
+      >
+        Commercials
+      </h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+        <div class="relative image-container fade-in">
+          <img
+            alt="Gallery image 7"
+            class="w-full h-auto"
+            src="https://placehold.co/400x300"
+          />
+          <div
+            class="absolute top-0 left-0 w-full h-full bg-black bg-opacity-70 flex justify-center items-center opacity-0 transition-opacity duration-300 pointer-events-none overlay"
+          >
+            <div class="border border-white p-4 text-white">Incididunt ut</div>
+          </div>
+        </div>
+        <div class="relative image-container fade-in">
+          <img
+            alt="Gallery image 8"
+            class="w-full h-auto"
+            src="https://placehold.co/400x300"
+          />
+          <div
+            class="absolute top-0 left-0 w-full h-full bg-black bg-opacity-70 flex justify-center items-center opacity-0 transition-opacity duration-300 pointer-events-none overlay"
+          >
+            <div class="border border-white p-4 text-white">Labore et</div>
+          </div>
+        </div>
+        <div class="relative image-container fade-in">
+          <img
+            alt="Gallery image 9"
+            class="w-full h-auto"
+            src="https://placehold.co/400x300"
+          />
+          <div
+            class="absolute top-0 left-0 w-full h-full bg-black bg-opacity-70 flex justify-center items-center opacity-0 transition-opacity duration-300 pointer-events-none overlay"
+          >
+            <div class="border border-white p-4 text-white">Dolore magna</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry, index) => {
+              if (entry.isIntersecting) {
+                setTimeout(() => {
+                  entry.target.classList.add("visible");
+                }, index * 300); // Staggering effect with 300ms delay
+              }
+            });
+          },
+          { threshold: 0.1 }
+        );
+
+        document.querySelectorAll(".fade-in").forEach((element) => {
+          observer.observe(element);
+        });
+      });
+    </script>
+  </body>
 </html>
