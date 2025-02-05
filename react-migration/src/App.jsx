@@ -1,3 +1,21 @@
+import HeroImage from "./assets/hero.jpg";
+import EventOneImage from "./assets/event1.jpg";
+import EventTwoImage from "./assets/event2.jpg";
+import ReelOneImage from "./assets/reel1.jpg";
+import ReelTwoImage from "./assets/reel2.jpg";
+import ReelThreeImage from "./assets/reel3.jpg";
+import ReelFourImage from "./assets/reel4.jpg";
+import ReelFiveImage from "./assets/reel5.jpg";
+import ReelSixImage from "./assets/reel6.jpg";
+import ReelSevenImage from "./assets/reel7.jpg";
+import ReelEightImage from "./assets/reel8.jpg";
+import ReelNineImage from "./assets/reel9.jpg";
+import SocialOneImage from "./assets/social1.jpg";
+import SocialTwoImage from "./assets/social2.jpg";
+import SocialThreeImage from "./assets/social3.jpg";
+import MusicOneImage from "./assets/music1.jpg";
+import MusicTwoImage from "./assets/music2.jpg";
+
 const narrativeImages = [
   { src: "https://placehold.co/400x300", text: "Lorem ipsum" },
   { src: "https://placehold.co/400x300", text: "Dolor sit" },
@@ -53,7 +71,7 @@ const App = () => {
           <img
             alt="A woman sitting at a table looking down, with a dimly lit background and some framed pictures on the wall"
             class="w-full"
-            src="thumbnails/hero.jpg"
+            src={HeroImage}
           />
         </a>
       </div>
@@ -63,39 +81,39 @@ const App = () => {
         </h2>
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-8">
           <div
-            class="relative image-container fade-in"
+            class="relative image-container"
             onclick="openPopup('https://www.youtube.com/embed/EXefeNxT2-w?rel=0')"
           >
             <img
               alt="Gallery image 1"
               class="w-full h-48 object-cover"
-              src="thumbnails/reel1.jpg"
+              src={ReelOneImage}
             />
             <div class="absolute top-0 left-0 w-full h-full bg-black bg-opacity-70 flex justify-center items-center opacity-0 transition-opacity duration-300 pointer-events-none overlay">
               {/* <!-- <div class="border border-white p-4 text-white">Villa reel</div> --> */}
             </div>
           </div>
           <div
-            class="relative image-container fade-in"
+            class="relative image-container"
             onclick="openPopup('https://www.youtube.com/embed/Ov_tfyxqsUQ?rel=0')"
           >
             <img
               alt="Gallery image 2"
               class="w-full h-48 object-cover"
-              src="thumbnails/reel2.jpg"
+              src={ReelTwoImage}
             />
             <div class="absolute top-0 left-0 w-full h-full bg-black bg-opacity-70 flex justify-center items-center opacity-0 transition-opacity duration-300 pointer-events-none overlay">
               {/* <!-- <div class="border border-white p-4 text-white">Townhouse</div> --> */}
             </div>
           </div>
           <div
-            class="relative image-container fade-in"
+            class="relative image-container"
             onclick="openPopup('https://www.youtube.com/embed/oNSkv62jCNw?rel=0')"
           >
             <img
               alt="Gallery image 3"
               class="w-full h-48 object-cover"
-              src="thumbnails/reel3.jpg"
+              src={ReelThreeImage}
             />
             <div class="absolute top-0 left-0 w-full h-full bg-black bg-opacity-70 flex justify-center items-center opacity-0 transition-opacity duration-300 pointer-events-none overlay">
               {/* <!-- <div class="border border-white p-4 text-white">
@@ -105,13 +123,13 @@ const App = () => {
             </div>
           </div>
           <div
-            class="relative image-container fade-in"
+            class="relative image-container"
             onclick="openPopup('https://www.youtube.com/embed/9S8TPfY2hqU?rel=0')"
           >
             <img
               alt="Gallery image 4"
               class="w-full h-48 object-cover"
-              src="thumbnails/reel4.jpg"
+              src={ReelFourImage}
             />
             <div class="absolute top-0 left-0 w-full h-full bg-black bg-opacity-70 flex justify-center items-center opacity-0 transition-opacity duration-300 pointer-events-none overlay">
               {/* <!-- <div class="border border-white p-4 text-white">
@@ -121,13 +139,13 @@ const App = () => {
             </div>
           </div>
           <div
-            class="relative image-container fade-in"
+            class="relative image-container"
             onclick="openPopup('https://www.youtube.com/embed/Wmh5lV-3MBM?rel=0')"
           >
             <img
               alt="Gallery image 5"
               class="w-full h-48 object-cover"
-              src="thumbnails/reel5.jpg"
+              src={ReelFiveImage}
             />
             <div class="absolute top-0 left-0 w-full h-full bg-black bg-opacity-70 flex justify-center items-center opacity-0 transition-opacity duration-300 pointer-events-none overlay">
               {/* <!-- <div class="border border-white p-4 text-white">
@@ -136,11 +154,11 @@ const App = () => {
             </div>
           </div>
           <a href="https://www.instagram.com/p/CjKp6UorNst/" target="_blank">
-            <div class="relative image-container fade-in">
+            <div class="relative image-container">
               <img
                 alt="Gallery image 6"
                 class="w-full h-48 object-cover"
-                src="thumbnails/reel6.jpg"
+                src={ReelSixImage}
               />
               <div class="absolute top-0 left-0 w-full h-full bg-black bg-opacity-70 flex justify-center items-center opacity-0 transition-opacity duration-300 pointer-events-none overlay">
                 {/* <!-- <div class="border border-white p-4 text-white">
@@ -150,11 +168,11 @@ const App = () => {
             </div>
           </a>
           <a href="https://www.instagram.com/p/ChW1rPxIW9V/" target="_blank">
-            <div class="relative image-container fade-in">
+            <div class="relative image-container">
               <img
                 alt="Gallery image 7"
                 class="w-full h-48 object-cover"
-                src="thumbnails/reel7.jpg"
+                src={ReelSevenImage}
               />
               <div class="absolute top-0 left-0 w-full h-full bg-black bg-opacity-70 flex justify-center items-center opacity-0 transition-opacity duration-300 pointer-events-none overlay">
                 {/* <!-- <div class="border border-white p-4 text-white">
@@ -164,11 +182,11 @@ const App = () => {
             </div>
           </a>
           <a href="https://www.instagram.com/p/CkA7DnTqmYN/" target="_blank">
-            <div class="relative image-container fade-in">
+            <div class="relative image-container">
               <img
                 alt="Gallery image 8"
                 class="w-full h-48 object-cover"
-                src="thumbnails/reel8.jpg"
+                src={ReelEightImage}
               />
               <div class="absolute top-0 left-0 w-full h-full bg-black bg-opacity-70 flex justify-center items-center opacity-0 transition-opacity duration-300 pointer-events-none overlay">
                 {/* <!-- <div class="border border-white p-4 text-white">
@@ -178,13 +196,13 @@ const App = () => {
             </div>
           </a>
           <div
-            class="relative image-container fade-in"
+            class="relative image-container"
             onclick="openPopup('https://www.youtube.com/embed/aRXntHcYFZs?rel=0')"
           >
             <img
               alt="Gallery image 9"
               class="w-full h-48 object-cover"
-              src="thumbnails/reel9.jpg"
+              src={ReelNineImage}
             />
             <div class="absolute top-0 left-0 w-full h-full bg-black bg-opacity-70 flex justify-center items-center opacity-0 transition-opacity duration-300 pointer-events-none overlay">
               {/* <!-- <div class="border border-white p-4 text-white">
@@ -198,13 +216,13 @@ const App = () => {
         </h2>
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-8">
           <div
-            class="relative image-container fade-in"
+            class="relative image-container"
             onclick="openPopup('https://www.youtube.com/embed/LhE-Lgkj3tg?rel=0')"
           >
             <img
               alt="Gallery image 4"
               class="w-full h-auto"
-              src="thumbnails/event1.jpg"
+              src={EventOneImage}
             />
             <div class="absolute top-0 left-0 w-full h-full bg-black bg-opacity-70 flex justify-center items-center opacity-0 transition-opacity duration-300 pointer-events-none overlay">
               {/* <!-- <div class="border border-white p-4 text-white">
@@ -213,13 +231,13 @@ const App = () => {
             </div>
           </div>
           <div
-            class="relative image-container fade-in"
+            class="relative image-container"
             onclick="openPopup('https://www.youtube.com/embed/W8NTANiXYxc?rel=0')"
           >
             <img
               alt="Gallery image 5"
               class="w-full h-auto"
-              src="thumbnails/event2.jpg"
+              src={EventTwoImage}
             />
             <div class="absolute top-0 left-0 w-full h-full bg-black bg-opacity-70 flex justify-center items-center opacity-0 transition-opacity duration-300 pointer-events-none overlay">
               {/* <!-- <div class="border border-white p-4 text-white">
@@ -233,11 +251,11 @@ const App = () => {
         </h2>
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
           <a href="https://www.instagram.com/p/C2Ffz0xN1s6/" target="_blank">
-            <div class="relative image-container fade-in">
+            <div class="relative image-container">
               <img
                 alt="Gallery image 7"
                 class="w-full h-auto"
-                src="thumbnails/social1.jpg"
+                src={SocialOneImage}
               />
               <div class="absolute top-0 left-0 w-full h-full bg-black bg-opacity-70 flex justify-center items-center opacity-0 transition-opacity duration-300 pointer-events-none overlay">
                 {/* <!-- <div class="border border-white p-4 text-white">
@@ -247,11 +265,11 @@ const App = () => {
             </div>
           </a>
           <a href="https://www.instagram.com/p/C3alfkJovZk/" target="_blank">
-            <div class="relative image-container fade-in">
+            <div class="relative image-container">
               <img
                 alt="Gallery image 8"
                 class="w-full h-auto"
-                src="thumbnails/social2.jpg"
+                src={SocialTwoImage}
               />
               <div class="absolute top-0 left-0 w-full h-full bg-black bg-opacity-70 flex justify-center items-center opacity-0 transition-opacity duration-300 pointer-events-none overlay">
                 {/* <!-- <div class="border border-white p-4 text-white">
@@ -261,11 +279,11 @@ const App = () => {
             </div>
           </a>
           <a href="https://www.instagram.com/p/C6MR1b8SeGq/" target="_blank">
-            <div class="relative image-container fade-in">
+            <div class="relative image-container">
               <img
                 alt="Gallery image 9"
                 class="w-full h-auto"
-                src="thumbnails/social3.jpg"
+                src={SocialThreeImage}
               />
               <div class="absolute top-0 left-0 w-full h-full bg-black bg-opacity-70 flex justify-center items-center opacity-0 transition-opacity duration-300 pointer-events-none overlay">
                 {/* <!-- <div class="border border-white p-4 text-white">
@@ -280,13 +298,13 @@ const App = () => {
         </h2>
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
           <div
-            class="relative image-container fade-in"
+            class="relative image-container"
             onclick="openPopup('https://www.youtube.com/embed/ZcQq9CGWev0?rel=0')"
           >
             <img
               alt="Gallery image 7"
               class="w-full h-auto"
-              src="thumbnails/music1.jpg"
+              src={MusicOneImage}
             />
             <div class="absolute top-0 left-0 w-full h-full bg-black bg-opacity-70 flex justify-center items-center opacity-0 transition-opacity duration-300 pointer-events-none overlay">
               {/* <!-- <div class="border border-white p-4 text-white">
@@ -295,13 +313,13 @@ const App = () => {
             </div>
           </div>
           <div
-            class="relative image-container fade-in"
+            class="relative image-container"
             onclick="openPopup('https://www.youtube.com/embed/cU2FfP4UuOo?rel=0')"
           >
             <img
               alt="Gallery image 8"
               class="w-full h-auto"
-              src="thumbnails/music2.jpg"
+              src={MusicTwoImage}
             />
             <div class="absolute top-0 left-0 w-full h-full bg-black bg-opacity-70 flex justify-center items-center opacity-0 transition-opacity duration-300 pointer-events-none overlay">
               {/* <!-- <div class="border border-white p-4 text-white">Yeh Aaina</div> --> */}
