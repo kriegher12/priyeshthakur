@@ -37,6 +37,32 @@ const commercialImages = [
 const App = () => {
   return (
     <>
+      <style>
+        {`
+          .image-container:hover .overlay {
+            opacity: 1;
+            pointer-events: auto;
+          }
+          .image-container:hover {
+            cursor: pointer;
+          }
+          .fade-in {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+          }
+          .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+          }
+          .open-sans-300 {
+            font-family: "Open Sans", serif;
+            font-optical-sizing: auto;
+            font-weight: 300;
+            font-style: normal;
+            font-variation-settings: "wdth" 100;
+          }`}
+      </style>
       <div class="container mx-auto text-center py-8">
         <h1 class="text-2xl font-bold">PRIYESH THAKUR</h1>
         <p class="text-sm">CINEMATOGRAPHER</p>
