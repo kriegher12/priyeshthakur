@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 function Contact() {
   return (
@@ -10,22 +11,22 @@ function Contact() {
           <nav class="mt-4">
             <ul class="flex justify-center space-x-8 text-sm">
               <li>
-                <a class="hover:underline" href="index.html">
+                <Link class="hover:underline" to="/">
                   {" "}
                   Narrative{" "}
-                </a>
+                </Link>
               </li>
               <li>
-                <a class="hover:underline" href="info.html">
+                <Link class="hover:underline" to="/info">
                   {" "}
                   Info{" "}
-                </a>
+                </Link>
               </li>
               <li>
-                <a class="hover:underline" href="contacts.html">
+                <Link class="hover:underline" to="/contact">
                   {" "}
                   Contact{" "}
-                </a>
+                </Link>
               </li>
             </ul>
           </nav>

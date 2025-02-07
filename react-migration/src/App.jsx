@@ -15,6 +15,7 @@ import SocialTwoImage from "./assets/social2.jpg";
 import SocialThreeImage from "./assets/social3.jpg";
 import MusicOneImage from "./assets/music1.jpg";
 import MusicTwoImage from "./assets/music2.jpg";
+import { Link } from "react-router-dom";
 
 const narrativeImages = [
   { src: "https://placehold.co/400x300", text: "Lorem ipsum" },
@@ -69,22 +70,22 @@ const App = () => {
         <nav class="mt-4">
           <ul class="flex justify-center space-x-8 text-sm">
             <li>
-              <a class="hover:underline" href="index.html">
+              <Link class="hover:underline" to="/">
                 {" "}
                 Narrative{" "}
-              </a>
+              </Link>
             </li>
             <li>
-              <a class="hover:underline" href="info.html">
+              <Link class="hover:underline" to="/info">
                 {" "}
                 Info{" "}
-              </a>
+              </Link>
             </li>
             <li>
-              <a class="hover:underline" href="contacts.html">
+              <Link class="hover:underline" to="/contact">
                 {" "}
                 Contact{" "}
-              </a>
+              </Link>
             </li>
           </ul>
         </nav>
