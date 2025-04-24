@@ -1,16 +1,36 @@
-import React, { useEffect } from "react";
+import React, { useMemo, memo } from "react";
 import { Link, useLocation } from "react-router-dom";
+
+const NavLink = memo(({ to, isActive, children }) => (
+  <li>
+    <Link
+      className={`nav-link font-medium ${isActive ? "active" : ""}`}
+      to={to}
+    >
+      {children}
+    </Link>
+  </li>
+));
+
+NavLink.displayName = 'NavLink';
 
 const Header = () => {
   const location = useLocation();
   const pathname = location.pathname;
 
+  // Links data
+  const navLinks = useMemo(() => [
+    { to: "/", label: "NARRATIVE" },
+    { to: "/info", label: "INFO" },
+    { to: "/contact", label: "CONTACT" }
+  ], []);
+
   // Helper function to determine if a link is active
-  const isActive = (path) => {
+  const isActive = useMemo(() => (path) => {
     if (path === "/" && pathname === "/") return true;
     if (path !== "/" && pathname.startsWith(path)) return true;
     return false;
-  };
+  }, [pathname]);
 
   return (
     <header className="bg-white shadow-sm sticky top-0 z-50">
@@ -20,30 +40,15 @@ const Header = () => {
           <p className="text-sm tracking-widest text-gray-600">CINEMATOGRAPHER</p>
           <nav className="mt-4">
             <ul className="flex justify-center space-x-12 text-sm">
-              <li>
-                <Link
-                  className={`nav-link font-medium ${isActive("/") ? "active" : ""}`}
-                  to="/"
+              {navLinks.map((link) => (
+                <NavLink 
+                  key={link.to} 
+                  to={link.to} 
+                  isActive={isActive(link.to)}
                 >
-                  NARRATIVE
-                </Link>
-              </li>
-              <li>
-                <Link
-                  className={`nav-link font-medium ${isActive("/info") ? "active" : ""}`}
-                  to="/info"
-                >
-                  INFO
-                </Link>
-              </li>
-              <li>
-                <Link
-                  className={`nav-link font-medium ${isActive("/contact") ? "active" : ""}`}
-                  to="/contact"
-                >
-                  CONTACT
-                </Link>
-              </li>
+                  {link.label}
+                </NavLink>
+              ))}
             </ul>
           </nav>
         </div>
@@ -52,4 +57,4 @@ const Header = () => {
   );
 };
 
-export default Header; 
+export default memo(Header); 

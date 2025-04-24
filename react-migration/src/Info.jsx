@@ -1,10 +1,28 @@
-import React from "react";
+import React, { memo } from "react";
 import InfoImage from "./assets/info.webp";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import { styles, tailwindConfig } from "./styles";
 
+// Memoized card component for better performance
+const ExpertiseCard = memo(({ text }) => (
+  <div className="expertise-card bg-white py-5 px-4 rounded-lg font-medium text-center">
+    {text}
+  </div>
+));
+
+ExpertiseCard.displayName = 'ExpertiseCard';
+
 function Info() {
+  const expertiseAreas = [
+    "Real Estate Photography",
+    "Videography",
+    "Video Editing",
+    "Social Media Content",
+    "Matterport 360° Virtual Tours",
+    "Marketing Strategy"
+  ];
+  
   return (
     <>
       <style>{styles}</style>
@@ -22,6 +40,7 @@ function Info() {
                     className="w-full h-auto"
                     src={InfoImage}
                     alt="Priyesh Thakur portrait"
+                    loading="eager"
                   />
                   <div className="p-6 text-center">
                     <p className="text-sm font-medium text-gray-700">
@@ -58,24 +77,9 @@ function Info() {
                 <section className="mb-8">
                   <h3 className="text-2xl font-semibold mb-6">Expertise:</h3>
                   <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                    <div className="expertise-card bg-white py-5 px-4 rounded-lg font-medium text-center">
-                      Real Estate Photography
-                    </div>
-                    <div className="expertise-card bg-white py-5 px-4 rounded-lg font-medium text-center">
-                      Videography
-                    </div>
-                    <div className="expertise-card bg-white py-5 px-4 rounded-lg font-medium text-center">
-                      Video Editing
-                    </div>
-                    <div className="expertise-card bg-white py-5 px-4 rounded-lg font-medium text-center">
-                      Social Media Content
-                    </div>
-                    <div className="expertise-card bg-white py-5 px-4 rounded-lg font-medium text-center">
-                      Matterport 360° Virtual Tours
-                    </div>
-                    <div className="expertise-card bg-white py-5 px-4 rounded-lg font-medium text-center">
-                      Marketing Strategy
-                    </div>
+                    {expertiseAreas.map((expertise, index) => (
+                      <ExpertiseCard key={index} text={expertise} />
+                    ))}
                   </div>
                 </section>
               </div>
@@ -89,4 +93,4 @@ function Info() {
   );
 }
 
-export default Info;
+export default memo(Info);

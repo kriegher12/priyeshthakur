@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useCallback } from "react";
 import HeroImage from "./assets/hero.jpg";
 import EventOneImage from "./assets/event1.jpg";
 import EventTwoImage from "./assets/event2.jpg";
@@ -20,24 +20,6 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import { styles, tailwindConfig } from "./styles";
 
-const narrativeImages = [
-  { src: "https://placehold.co/400x300", text: "Lorem ipsum" },
-  { src: "https://placehold.co/400x300", text: "Dolor sit" },
-  { src: "https://placehold.co/400x300", text: "Amet consectetur" },
-];
-
-const musicVideoImages = [
-  { src: "https://placehold.co/400x300", text: "Adipiscing elit" },
-  { src: "https://placehold.co/400x300", text: "Sed do" },
-  { src: "https://placehold.co/400x300", text: "Eiusmod tempor" },
-];
-
-const commercialImages = [
-  { src: "https://placehold.co/400x300", text: "Incididunt ut" },
-  { src: "https://placehold.co/400x300", text: "Labore et" },
-  { src: "https://placehold.co/400x300", text: "Dolore magna" },
-];
-
 const App = () => {
   // Effect for fade-in animations
   useEffect(() => {
@@ -54,27 +36,41 @@ const App = () => {
       { threshold: 0.1, rootMargin: "0px 0px 50px 0px" }
     );
 
-    document.querySelectorAll(".fade-in").forEach((element) => {
+    const fadeElements = document.querySelectorAll(".fade-in");
+    fadeElements.forEach((element) => {
       observer.observe(element);
     });
 
-    return () => observer.disconnect();
+    return () => {
+      fadeElements.forEach((element) => {
+        observer.unobserve(element);
+      });
+      observer.disconnect();
+    };
   }, []);
 
   // Popup modal functionality
-  const openPopup = (embedUrl) => {
+  const openPopup = useCallback((embedUrl) => {
     const modal = document.getElementById("popup-modal");
-    modal.querySelector("iframe").src = embedUrl;
+    if (!modal) return;
+    
+    const iframe = modal.querySelector("iframe");
+    if (iframe) iframe.src = embedUrl;
+    
     modal.classList.remove("hidden");
     document.body.style.overflow = "hidden"; // Prevent scrolling when modal is open
-  };
+  }, []);
 
-  const closePopup = () => {
+  const closePopup = useCallback(() => {
     const modal = document.getElementById("popup-modal");
-    modal.querySelector("iframe").src = "";
+    if (!modal) return;
+    
+    const iframe = modal.querySelector("iframe");
+    if (iframe) iframe.src = "";
+    
     modal.classList.add("hidden");
     document.body.style.overflow = ""; // Re-enable scrolling
-  };
+  }, []);
 
   // Setup event listeners for popup
   useEffect(() => {
@@ -93,22 +89,23 @@ const App = () => {
       });
 
       // Close modal on ESC key
-      document.addEventListener("keydown", (e) => {
+      const handleEscKey = (e) => {
         if (e.key === "Escape" && !modal.classList.contains("hidden")) {
           closePopup();
         }
-      });
-    }
+      };
+      
+      document.addEventListener("keydown", handleEscKey);
 
-    return () => {
-      if (closeBtn) closeBtn.removeEventListener("click", closePopup);
-      document.removeEventListener("keydown", (e) => {
-        if (e.key === "Escape" && !modal?.classList.contains("hidden")) {
-          closePopup();
-        }
-      });
-    };
-  }, []);
+      return () => {
+        closeBtn.removeEventListener("click", closePopup);
+        modal.removeEventListener("click", (e) => {
+          if (e.target === modal) closePopup();
+        });
+        document.removeEventListener("keydown", handleEscKey);
+      };
+    }
+  }, [closePopup]);
 
   return (
     <>
@@ -130,6 +127,7 @@ const App = () => {
                 alt="A woman sitting at a table looking down, with a dimly lit background and some framed pictures on the wall"
                 className="w-full"
                 src={HeroImage}
+                loading="eager"
               />
             </a>
           </div>
@@ -148,6 +146,7 @@ const App = () => {
                   alt="Gallery image 1"
                   className="w-full h-64 object-cover"
                   src={ReelOneImage}
+                  loading="lazy"
                 />
                 <div className="absolute top-0 left-0 w-full h-full flex justify-center items-center opacity-0 transition-opacity duration-300 pointer-events-none overlay">
                   <div className="text-white flex items-center justify-center">
@@ -165,6 +164,7 @@ const App = () => {
                   alt="Gallery image 2"
                   className="w-full h-64 object-cover"
                   src={ReelTwoImage}
+                  loading="lazy"
                 />
                 <div className="absolute top-0 left-0 w-full h-full flex justify-center items-center opacity-0 transition-opacity duration-300 pointer-events-none overlay">
                   <div className="text-white flex items-center justify-center">
@@ -182,6 +182,7 @@ const App = () => {
                   alt="Gallery image 3"
                   className="w-full h-64 object-cover"
                   src={ReelThreeImage}
+                  loading="lazy"
                 />
                 <div className="absolute top-0 left-0 w-full h-full flex justify-center items-center opacity-0 transition-opacity duration-300 pointer-events-none overlay">
                   <div className="text-white flex items-center justify-center">
@@ -199,6 +200,7 @@ const App = () => {
                   alt="Gallery image 4"
                   className="w-full h-64 object-cover"
                   src={ReelFourImage}
+                  loading="lazy"
                 />
                 <div className="absolute top-0 left-0 w-full h-full flex justify-center items-center opacity-0 transition-opacity duration-300 pointer-events-none overlay">
                   <div className="text-white flex items-center justify-center">
@@ -216,6 +218,7 @@ const App = () => {
                   alt="Gallery image 5"
                   className="w-full h-64 object-cover"
                   src={ReelFiveImage}
+                  loading="lazy"
                 />
                 <div className="absolute top-0 left-0 w-full h-full flex justify-center items-center opacity-0 transition-opacity duration-300 pointer-events-none overlay">
                   <div className="text-white flex items-center justify-center">
@@ -231,6 +234,7 @@ const App = () => {
                     alt="Gallery image 6"
                     className="w-full h-64 object-cover"
                     src={ReelSixImage}
+                    loading="lazy"
                   />
                   <div className="absolute top-0 left-0 w-full h-full flex justify-center items-center opacity-0 transition-opacity duration-300 pointer-events-none overlay">
                     <div className="text-white flex items-center justify-center">
@@ -247,6 +251,7 @@ const App = () => {
                     alt="Gallery image 7"
                     className="w-full h-64 object-cover"
                     src={ReelSevenImage}
+                    loading="lazy"
                   />
                   <div className="absolute top-0 left-0 w-full h-full flex justify-center items-center opacity-0 transition-opacity duration-300 pointer-events-none overlay">
                     <div className="text-white flex items-center justify-center">
@@ -263,6 +268,7 @@ const App = () => {
                     alt="Gallery image 8"
                     className="w-full h-64 object-cover"
                     src={ReelEightImage}
+                    loading="lazy"
                   />
                   <div className="absolute top-0 left-0 w-full h-full flex justify-center items-center opacity-0 transition-opacity duration-300 pointer-events-none overlay">
                     <div className="text-white flex items-center justify-center">
@@ -281,6 +287,7 @@ const App = () => {
                   alt="Gallery image 9"
                   className="w-full h-64 object-cover"
                   src={ReelNineImage}
+                  loading="lazy"
                 />
                 <div className="absolute top-0 left-0 w-full h-full flex justify-center items-center opacity-0 transition-opacity duration-300 pointer-events-none overlay">
                   <div className="text-white flex items-center justify-center">
@@ -303,6 +310,7 @@ const App = () => {
                   alt="Gallery image 4"
                   className="w-full h-64 object-cover"
                   src={EventOneImage}
+                  loading="lazy"
                 />
                 <div className="absolute top-0 left-0 w-full h-full flex justify-center items-center opacity-0 transition-opacity duration-300 pointer-events-none overlay">
                   <div className="text-white flex items-center justify-center">
@@ -320,6 +328,7 @@ const App = () => {
                   alt="Gallery image 5"
                   className="w-full h-64 object-cover"
                   src={EventTwoImage}
+                  loading="lazy"
                 />
                 <div className="absolute top-0 left-0 w-full h-full flex justify-center items-center opacity-0 transition-opacity duration-300 pointer-events-none overlay">
                   <div className="text-white flex items-center justify-center">
@@ -340,6 +349,7 @@ const App = () => {
                     alt="Gallery image 7"
                     className="w-full h-64 object-cover"
                     src={SocialOneImage}
+                    loading="lazy"
                   />
                   <div className="absolute top-0 left-0 w-full h-full flex justify-center items-center opacity-0 transition-opacity duration-300 pointer-events-none overlay">
                     <div className="text-white flex items-center justify-center">
@@ -356,6 +366,7 @@ const App = () => {
                     alt="Gallery image 8"
                     className="w-full h-64 object-cover"
                     src={SocialTwoImage}
+                    loading="lazy"
                   />
                   <div className="absolute top-0 left-0 w-full h-full flex justify-center items-center opacity-0 transition-opacity duration-300 pointer-events-none overlay">
                     <div className="text-white flex items-center justify-center">
@@ -372,6 +383,7 @@ const App = () => {
                     alt="Gallery image 9"
                     className="w-full h-64 object-cover"
                     src={SocialThreeImage}
+                    loading="lazy"
                   />
                   <div className="absolute top-0 left-0 w-full h-full flex justify-center items-center opacity-0 transition-opacity duration-300 pointer-events-none overlay">
                     <div className="text-white flex items-center justify-center">
@@ -395,6 +407,7 @@ const App = () => {
                   alt="Gallery image 7"
                   className="w-full h-64 object-cover"
                   src={MusicOneImage}
+                  loading="lazy"
                 />
                 <div className="absolute top-0 left-0 w-full h-full flex justify-center items-center opacity-0 transition-opacity duration-300 pointer-events-none overlay">
                   <div className="text-white flex items-center justify-center">
@@ -412,6 +425,7 @@ const App = () => {
                   alt="Gallery image 8"
                   className="w-full h-64 object-cover"
                   src={MusicTwoImage}
+                  loading="lazy"
                 />
                 <div className="absolute top-0 left-0 w-full h-full flex justify-center items-center opacity-0 transition-opacity duration-300 pointer-events-none overlay">
                   <div className="text-white flex items-center justify-center">
