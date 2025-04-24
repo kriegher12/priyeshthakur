@@ -1,3 +1,4 @@
+import React, { useEffect } from "react";
 import HeroImage from "./assets/hero.jpg";
 import EventOneImage from "./assets/event1.jpg";
 import EventTwoImage from "./assets/event2.jpg";
@@ -15,7 +16,9 @@ import SocialTwoImage from "./assets/social2.jpg";
 import SocialThreeImage from "./assets/social3.jpg";
 import MusicOneImage from "./assets/music1.jpg";
 import MusicTwoImage from "./assets/music2.jpg";
-import { Link } from "react-router-dom";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
+import { styles, tailwindConfig } from "./styles";
 
 const narrativeImages = [
   { src: "https://placehold.co/400x300", text: "Lorem ipsum" },
@@ -36,390 +39,419 @@ const commercialImages = [
 ];
 
 const App = () => {
+  // Effect for fade-in animations
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry, index) => {
+          if (entry.isIntersecting) {
+            setTimeout(() => {
+              entry.target.classList.add("visible");
+            }, index * 150); // Staggering effect
+          }
+        });
+      },
+      { threshold: 0.1, rootMargin: "0px 0px 50px 0px" }
+    );
+
+    document.querySelectorAll(".fade-in").forEach((element) => {
+      observer.observe(element);
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
+  // Popup modal functionality
+  const openPopup = (embedUrl) => {
+    const modal = document.getElementById("popup-modal");
+    modal.querySelector("iframe").src = embedUrl;
+    modal.classList.remove("hidden");
+    document.body.style.overflow = "hidden"; // Prevent scrolling when modal is open
+  };
+
+  const closePopup = () => {
+    const modal = document.getElementById("popup-modal");
+    modal.querySelector("iframe").src = "";
+    modal.classList.add("hidden");
+    document.body.style.overflow = ""; // Re-enable scrolling
+  };
+
+  // Setup event listeners for popup
+  useEffect(() => {
+    const closeBtn = document.getElementById("close-modal");
+    const modal = document.getElementById("popup-modal");
+
+    if (closeBtn && modal) {
+      // Close modal when clicking close button
+      closeBtn.addEventListener("click", closePopup);
+
+      // Close modal when clicking outside content
+      modal.addEventListener("click", (e) => {
+        if (e.target === modal) {
+          closePopup();
+        }
+      });
+
+      // Close modal on ESC key
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && !modal.classList.contains("hidden")) {
+          closePopup();
+        }
+      });
+    }
+
+    return () => {
+      if (closeBtn) closeBtn.removeEventListener("click", closePopup);
+      document.removeEventListener("keydown", (e) => {
+        if (e.key === "Escape" && !modal?.classList.contains("hidden")) {
+          closePopup();
+        }
+      });
+    };
+  }, []);
+
   return (
     <>
-      <style>
-        {`
-          .image-container:hover .overlay {
-            opacity: 1;
-            pointer-events: auto;
-          }
-          .image-container:hover {
-            cursor: pointer;
-          }
-          .fade-in {
-            opacity: 0;
-            transform: translateY(40px);
-            transition: opacity 1s ease-in-out, transform 1s ease-in-out;
-          }
-          .fade-in.visible {
-            opacity: 1;
-            transform: translateY(0);
-          }
-          .open-sans-300 {
-            font-family: "Open Sans", serif;
-            font-optical-sizing: auto;
-            font-weight: 300;
-            font-style: normal;
-            font-variation-settings: "wdth" 100;
-          }`}
-      </style>
-      <div class="container mx-auto text-center py-8">
-        <h1 class="text-2xl font-bold">PRIYESH THAKUR</h1>
-        <p class="text-sm">CINEMATOGRAPHER</p>
-        <nav class="mt-4">
-          <ul class="flex justify-center space-x-8 text-sm">
-            <li>
-              <Link class="hover:underline" to="/">
-                {" "}
-                Narrative{" "}
-              </Link>
-            </li>
-            <li>
-              <Link class="hover:underline" to="/info">
-                {" "}
-                Info{" "}
-              </Link>
-            </li>
-            <li>
-              <Link class="hover:underline" to="/contact">
-                {" "}
-                Contact{" "}
-              </Link>
-            </li>
-          </ul>
-        </nav>
-      </div>
-      <div class="container mx-auto">
-        <a
-          href="https://www.behance.net/gallery/157282833/Abu-Dhabi-Tour-For-WIAK/modules/887335431"
-          target="_blank"
-        >
-          <img
-            alt="A woman sitting at a table looking down, with a dimly lit background and some framed pictures on the wall"
-            class="w-full"
-            src={HeroImage}
-          />
-        </a>
-      </div>
-      <div class="container mx-auto py-8">
-        <h2 class="text-2xl font-staatliches text-center mb-8 uppercase open-sans-300">
-          Reels and Engagement content
-        </h2>
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-8">
-          <div
-            class="relative image-container"
-            onclick="openPopup('https://www.youtube.com/embed/EXefeNxT2-w?rel=0')"
-          >
-            <img
-              alt="Gallery image 1"
-              class="w-full h-48 object-cover"
-              src={ReelOneImage}
-            />
-            <div class="absolute top-0 left-0 w-full h-full bg-black bg-opacity-70 flex justify-center items-center opacity-0 transition-opacity duration-300 pointer-events-none overlay">
-              {/* <!-- <div class="border border-white p-4 text-white">Villa reel</div> --> */}
-            </div>
-          </div>
-          <div
-            class="relative image-container"
-            onclick="openPopup('https://www.youtube.com/embed/Ov_tfyxqsUQ?rel=0')"
-          >
-            <img
-              alt="Gallery image 2"
-              class="w-full h-48 object-cover"
-              src={ReelTwoImage}
-            />
-            <div class="absolute top-0 left-0 w-full h-full bg-black bg-opacity-70 flex justify-center items-center opacity-0 transition-opacity duration-300 pointer-events-none overlay">
-              {/* <!-- <div class="border border-white p-4 text-white">Townhouse</div> --> */}
-            </div>
-          </div>
-          <div
-            class="relative image-container"
-            onclick="openPopup('https://www.youtube.com/embed/oNSkv62jCNw?rel=0')"
-          >
-            <img
-              alt="Gallery image 3"
-              class="w-full h-48 object-cover"
-              src={ReelThreeImage}
-            />
-            <div class="absolute top-0 left-0 w-full h-full bg-black bg-opacity-70 flex justify-center items-center opacity-0 transition-opacity duration-300 pointer-events-none overlay">
-              {/* <!-- <div class="border border-white p-4 text-white">
-        If you aspire to be a proud property owner, look no further than
-        Starling Properties
-      </div> --> */}
-            </div>
-          </div>
-          <div
-            class="relative image-container"
-            onclick="openPopup('https://www.youtube.com/embed/9S8TPfY2hqU?rel=0')"
-          >
-            <img
-              alt="Gallery image 4"
-              class="w-full h-48 object-cover"
-              src={ReelFourImage}
-            />
-            <div class="absolute top-0 left-0 w-full h-full bg-black bg-opacity-70 flex justify-center items-center opacity-0 transition-opacity duration-300 pointer-events-none overlay">
-              {/* <!-- <div class="border border-white p-4 text-white">
-        Experience European charm in Dubai at Ghaf Woods by Majid AL
-        Futtaim
-      </div> --> */}
-            </div>
-          </div>
-          <div
-            class="relative image-container"
-            onclick="openPopup('https://www.youtube.com/embed/Wmh5lV-3MBM?rel=0')"
-          >
-            <img
-              alt="Gallery image 5"
-              class="w-full h-48 object-cover"
-              src={ReelFiveImage}
-            />
-            <div class="absolute top-0 left-0 w-full h-full bg-black bg-opacity-70 flex justify-center items-center opacity-0 transition-opacity duration-300 pointer-events-none overlay">
-              {/* <!-- <div class="border border-white p-4 text-white">
-        8 December 2023
-      </div> --> */}
-            </div>
-          </div>
-          <a href="https://www.instagram.com/p/CjKp6UorNst/" target="_blank">
-            <div class="relative image-container">
-              <img
-                alt="Gallery image 6"
-                class="w-full h-48 object-cover"
-                src={ReelSixImage}
-              />
-              <div class="absolute top-0 left-0 w-full h-full bg-black bg-opacity-70 flex justify-center items-center opacity-0 transition-opacity duration-300 pointer-events-none overlay">
-                {/* <!-- <div class="border border-white p-4 text-white">
-          Link to Instagram
-        </div> --> */}
-              </div>
-            </div>
-          </a>
-          <a href="https://www.instagram.com/p/ChW1rPxIW9V/" target="_blank">
-            <div class="relative image-container">
-              <img
-                alt="Gallery image 7"
-                class="w-full h-48 object-cover"
-                src={ReelSevenImage}
-              />
-              <div class="absolute top-0 left-0 w-full h-full bg-black bg-opacity-70 flex justify-center items-center opacity-0 transition-opacity duration-300 pointer-events-none overlay">
-                {/* <!-- <div class="border border-white p-4 text-white">
-          Link to Instagram
-        </div> --> */}
-              </div>
-            </div>
-          </a>
-          <a href="https://www.instagram.com/p/CkA7DnTqmYN/" target="_blank">
-            <div class="relative image-container">
-              <img
-                alt="Gallery image 8"
-                class="w-full h-48 object-cover"
-                src={ReelEightImage}
-              />
-              <div class="absolute top-0 left-0 w-full h-full bg-black bg-opacity-70 flex justify-center items-center opacity-0 transition-opacity duration-300 pointer-events-none overlay">
-                {/* <!-- <div class="border border-white p-4 text-white">
-          Link to Instagram
-        </div> --> */}
-              </div>
-            </div>
-          </a>
-          <div
-            class="relative image-container"
-            onclick="openPopup('https://www.youtube.com/embed/aRXntHcYFZs?rel=0')"
-          >
-            <img
-              alt="Gallery image 9"
-              class="w-full h-48 object-cover"
-              src={ReelNineImage}
-            />
-            <div class="absolute top-0 left-0 w-full h-full bg-black bg-opacity-70 flex justify-center items-center opacity-0 transition-opacity duration-300 pointer-events-none overlay">
-              {/* <!-- <div class="border border-white p-4 text-white">
-        From work mode to beach mode in the blink of an eye!
-      </div> --> */}
-            </div>
-          </div>
-        </div>
-        <h2 class="text-2xl font-staatliches text-center mb-8 uppercase open-sans-300">
-          Event Videos
-        </h2>
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-8">
-          <div
-            class="relative image-container"
-            onclick="openPopup('https://www.youtube.com/embed/LhE-Lgkj3tg?rel=0')"
-          >
-            <img
-              alt="Gallery image 4"
-              class="w-full h-auto"
-              src={EventOneImage}
-            />
-            <div class="absolute top-0 left-0 w-full h-full bg-black bg-opacity-70 flex justify-center items-center opacity-0 transition-opacity duration-300 pointer-events-none overlay">
-              {/* <!-- <div class="border border-white p-4 text-white">
-            Scooter racing cup final 2
-          </div> --> */}
-            </div>
-          </div>
-          <div
-            class="relative image-container"
-            onclick="openPopup('https://www.youtube.com/embed/W8NTANiXYxc?rel=0')"
-          >
-            <img
-              alt="Gallery image 5"
-              class="w-full h-auto"
-              src={EventTwoImage}
-            />
-            <div class="absolute top-0 left-0 w-full h-full bg-black bg-opacity-70 flex justify-center items-center opacity-0 transition-opacity duration-300 pointer-events-none overlay">
-              {/* <!-- <div class="border border-white p-4 text-white">
-            Staring Properties Roadshow in Colombia and Mexico
-          </div> --> */}
-            </div>
-          </div>
-        </div>
-        <h2 class="text-2xl font-staatliches text-center mb-8 uppercase open-sans-300">
-          Personal Social Content Page
-        </h2>
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-          <a href="https://www.instagram.com/p/C2Ffz0xN1s6/" target="_blank">
-            <div class="relative image-container">
-              <img
-                alt="Gallery image 7"
-                class="w-full h-auto"
-                src={SocialOneImage}
-              />
-              <div class="absolute top-0 left-0 w-full h-full bg-black bg-opacity-70 flex justify-center items-center opacity-0 transition-opacity duration-300 pointer-events-none overlay">
-                {/* <!-- <div class="border border-white p-4 text-white">
-              Link to Instagram
-            </div> --> */}
-              </div>
-            </div>
-          </a>
-          <a href="https://www.instagram.com/p/C3alfkJovZk/" target="_blank">
-            <div class="relative image-container">
-              <img
-                alt="Gallery image 8"
-                class="w-full h-auto"
-                src={SocialTwoImage}
-              />
-              <div class="absolute top-0 left-0 w-full h-full bg-black bg-opacity-70 flex justify-center items-center opacity-0 transition-opacity duration-300 pointer-events-none overlay">
-                {/* <!-- <div class="border border-white p-4 text-white">
-              Link to Instagram
-            </div> --> */}
-              </div>
-            </div>
-          </a>
-          <a href="https://www.instagram.com/p/C6MR1b8SeGq/" target="_blank">
-            <div class="relative image-container">
-              <img
-                alt="Gallery image 9"
-                class="w-full h-auto"
-                src={SocialThreeImage}
-              />
-              <div class="absolute top-0 left-0 w-full h-full bg-black bg-opacity-70 flex justify-center items-center opacity-0 transition-opacity duration-300 pointer-events-none overlay">
-                {/* <!-- <div class="border border-white p-4 text-white">
-              Link to Instagram
-            </div> --> */}
-              </div>
-            </div>
-          </a>
-        </div>
-        <h2 class="text-2xl font-staatliches text-center my-8 uppercase open-sans-300">
-          Music Videos
-        </h2>
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-          <div
-            class="relative image-container"
-            onclick="openPopup('https://www.youtube.com/embed/ZcQq9CGWev0?rel=0')"
-          >
-            <img
-              alt="Gallery image 7"
-              class="w-full h-auto"
-              src={MusicOneImage}
-            />
-            <div class="absolute top-0 left-0 w-full h-full bg-black bg-opacity-70 flex justify-center items-center opacity-0 transition-opacity duration-300 pointer-events-none overlay">
-              {/* <!-- <div class="border border-white p-4 text-white">
-            Duur (Official Video)
-          </div> --> */}
-            </div>
-          </div>
-          <div
-            class="relative image-container"
-            onclick="openPopup('https://www.youtube.com/embed/cU2FfP4UuOo?rel=0')"
-          >
-            <img
-              alt="Gallery image 8"
-              class="w-full h-auto"
-              src={MusicTwoImage}
-            />
-            <div class="absolute top-0 left-0 w-full h-full bg-black bg-opacity-70 flex justify-center items-center opacity-0 transition-opacity duration-300 pointer-events-none overlay">
-              {/* <!-- <div class="border border-white p-4 text-white">Yeh Aaina</div> --> */}
-            </div>
-          </div>
-        </div>
-      </div>
-      <div
-        id="popup-modal"
-        class="fixed inset-0 bg-black bg-opacity-75 flex justify-center items-center hidden"
-      >
-        <div class="bg-white max-w-lg w-full flex">
-          <div class="w-full">
-            <iframe
-              width="100%"
-              height="700px"
-              src=""
-              title="YouTube video player"
-              frameborder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowfullscreen
-            ></iframe>
-          </div>
-          {/* <!-- <div class="w-1/3 relative">
-        <button
-          id="close-modal"
-          class="text-gray-700 hover:text-black absolute top-2 right-2"
-        >
-          <i class="fas fa-times"></i>
-        </button>
-        <h3 class="text-xl font-bold mb-4 mt-4 ml-4">Popup Title</h3>
-        <p class="mb-4 ml-4">
-          This is the content of the popup modal describing the image on the
-          left.
-        </p>
-      </div> --> */}
-        </div>
-        <button
-          id="close-modal"
-          class="text-white hover:text-gray-100 absolute top-2 right-2"
-        >
-          <i class="fas fa-times"></i>
-        </button>
-      </div>
-      <footer class="text-center pb-4">
-        <p class="text-sm flex flex-col"></p>
-        <div>
-          <div class="flex justify-center space-x-4">
+      <style>{styles}</style>
+      <script dangerouslySetInnerHTML={{ __html: tailwindConfig }} />
+      
+      <div className="font-sans text-dark min-h-screen flex flex-col">
+        <Header />
+        
+        <main className="flex-grow">
+          <div className="container mx-auto mt-6">
             <a
-              href="https://www.behance.net/Priyesh96"
+              href="https://www.behance.net/gallery/157282833/Abu-Dhabi-Tour-For-WIAK/modules/887335431"
               target="_blank"
-              class="rounded-full p-3"
+              rel="noopener noreferrer"
+              className="block rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300"
             >
-              <i class="fab fa-behance text-xl"></i>
-            </a>
-            <a
-              href="https://www.instagram.com/priyeshcinematics/"
-              target="_blank"
-              class="rounded-full p-3"
-            >
-              <i class="fab fa-instagram text-xl"></i>
-            </a>
-            <a
-              href="https://www.linkedin.com/in/priyesh-thakur-8170a6101/"
-              target="_blank"
-              class="rounded-full p-3"
-            >
-              <i class="fab fa-linkedin text-xl"></i>
+              <img
+                alt="A woman sitting at a table looking down, with a dimly lit background and some framed pictures on the wall"
+                className="w-full"
+                src={HeroImage}
+              />
             </a>
           </div>
+
+          <div className="container mx-auto px-4 py-12">
+            <h2 className="section-heading text-2xl text-center uppercase mb-8">
+              Reels and Engagement content
+            </h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-12">
+              {/* Reel 1 */}
+              <div
+                className="relative image-container fade-in"
+                onClick={() => openPopup('https://www.youtube.com/embed/EXefeNxT2-w?rel=0')}
+              >
+                <img
+                  alt="Gallery image 1"
+                  className="w-full h-64 object-cover"
+                  src={ReelOneImage}
+                />
+                <div className="absolute top-0 left-0 w-full h-full flex justify-center items-center opacity-0 transition-opacity duration-300 pointer-events-none overlay">
+                  <div className="text-white flex items-center justify-center">
+                    <i className="fas fa-play-circle text-4xl"></i>
+                  </div>
+                </div>
+              </div>
+
+              {/* Reel 2 */}
+              <div
+                className="relative image-container fade-in"
+                onClick={() => openPopup('https://www.youtube.com/embed/Ov_tfyxqsUQ?rel=0')}
+              >
+                <img
+                  alt="Gallery image 2"
+                  className="w-full h-64 object-cover"
+                  src={ReelTwoImage}
+                />
+                <div className="absolute top-0 left-0 w-full h-full flex justify-center items-center opacity-0 transition-opacity duration-300 pointer-events-none overlay">
+                  <div className="text-white flex items-center justify-center">
+                    <i className="fas fa-play-circle text-4xl"></i>
+                  </div>
+                </div>
+              </div>
+
+              {/* Reel 3 */}
+              <div
+                className="relative image-container fade-in"
+                onClick={() => openPopup('https://www.youtube.com/embed/oNSkv62jCNw?rel=0')}
+              >
+                <img
+                  alt="Gallery image 3"
+                  className="w-full h-64 object-cover"
+                  src={ReelThreeImage}
+                />
+                <div className="absolute top-0 left-0 w-full h-full flex justify-center items-center opacity-0 transition-opacity duration-300 pointer-events-none overlay">
+                  <div className="text-white flex items-center justify-center">
+                    <i className="fas fa-play-circle text-4xl"></i>
+                  </div>
+                </div>
+              </div>
+
+              {/* Reel 4 */}
+              <div
+                className="relative image-container fade-in"
+                onClick={() => openPopup('https://www.youtube.com/embed/9S8TPfY2hqU?rel=0')}
+              >
+                <img
+                  alt="Gallery image 4"
+                  className="w-full h-64 object-cover"
+                  src={ReelFourImage}
+                />
+                <div className="absolute top-0 left-0 w-full h-full flex justify-center items-center opacity-0 transition-opacity duration-300 pointer-events-none overlay">
+                  <div className="text-white flex items-center justify-center">
+                    <i className="fas fa-play-circle text-4xl"></i>
+                  </div>
+                </div>
+              </div>
+
+              {/* Reel 5 */}
+              <div
+                className="relative image-container fade-in"
+                onClick={() => openPopup('https://www.youtube.com/embed/Wmh5lV-3MBM?rel=0')}
+              >
+                <img
+                  alt="Gallery image 5"
+                  className="w-full h-64 object-cover"
+                  src={ReelFiveImage}
+                />
+                <div className="absolute top-0 left-0 w-full h-full flex justify-center items-center opacity-0 transition-opacity duration-300 pointer-events-none overlay">
+                  <div className="text-white flex items-center justify-center">
+                    <i className="fas fa-play-circle text-4xl"></i>
+                  </div>
+                </div>
+              </div>
+
+              {/* Reel 6 */}
+              <a href="https://www.instagram.com/p/CjKp6UorNst/" target="_blank" rel="noopener noreferrer">
+                <div className="relative image-container fade-in">
+                  <img
+                    alt="Gallery image 6"
+                    className="w-full h-64 object-cover"
+                    src={ReelSixImage}
+                  />
+                  <div className="absolute top-0 left-0 w-full h-full flex justify-center items-center opacity-0 transition-opacity duration-300 pointer-events-none overlay">
+                    <div className="text-white flex items-center justify-center">
+                      <i className="fab fa-instagram text-4xl"></i>
+                    </div>
+                  </div>
+                </div>
+              </a>
+
+              {/* Reel 7 */}
+              <a href="https://www.instagram.com/p/ChW1rPxIW9V/" target="_blank" rel="noopener noreferrer">
+                <div className="relative image-container fade-in">
+                  <img
+                    alt="Gallery image 7"
+                    className="w-full h-64 object-cover"
+                    src={ReelSevenImage}
+                  />
+                  <div className="absolute top-0 left-0 w-full h-full flex justify-center items-center opacity-0 transition-opacity duration-300 pointer-events-none overlay">
+                    <div className="text-white flex items-center justify-center">
+                      <i className="fab fa-instagram text-4xl"></i>
+                    </div>
+                  </div>
+                </div>
+              </a>
+
+              {/* Reel 8 */}
+              <a href="https://www.instagram.com/p/CkA7DnTqmYN/" target="_blank" rel="noopener noreferrer">
+                <div className="relative image-container fade-in">
+                  <img
+                    alt="Gallery image 8"
+                    className="w-full h-64 object-cover"
+                    src={ReelEightImage}
+                  />
+                  <div className="absolute top-0 left-0 w-full h-full flex justify-center items-center opacity-0 transition-opacity duration-300 pointer-events-none overlay">
+                    <div className="text-white flex items-center justify-center">
+                      <i className="fab fa-instagram text-4xl"></i>
+                    </div>
+                  </div>
+                </div>
+              </a>
+
+              {/* Reel 9 */}
+              <div
+                className="relative image-container fade-in"
+                onClick={() => openPopup('https://www.youtube.com/embed/aRXntHcYFZs?rel=0')}
+              >
+                <img
+                  alt="Gallery image 9"
+                  className="w-full h-64 object-cover"
+                  src={ReelNineImage}
+                />
+                <div className="absolute top-0 left-0 w-full h-full flex justify-center items-center opacity-0 transition-opacity duration-300 pointer-events-none overlay">
+                  <div className="text-white flex items-center justify-center">
+                    <i className="fas fa-play-circle text-4xl"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <h2 className="section-heading text-2xl text-center uppercase mb-8">
+              Event Videos
+            </h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-12">
+              {/* Event 1 */}
+              <div
+                className="relative image-container fade-in"
+                onClick={() => openPopup('https://www.youtube.com/embed/LhE-Lgkj3tg?rel=0')}
+              >
+                <img
+                  alt="Gallery image 4"
+                  className="w-full h-64 object-cover"
+                  src={EventOneImage}
+                />
+                <div className="absolute top-0 left-0 w-full h-full flex justify-center items-center opacity-0 transition-opacity duration-300 pointer-events-none overlay">
+                  <div className="text-white flex items-center justify-center">
+                    <i className="fas fa-play-circle text-4xl"></i>
+                  </div>
+                </div>
+              </div>
+
+              {/* Event 2 */}
+              <div
+                className="relative image-container fade-in"
+                onClick={() => openPopup('https://www.youtube.com/embed/W8NTANiXYxc?rel=0')}
+              >
+                <img
+                  alt="Gallery image 5"
+                  className="w-full h-64 object-cover"
+                  src={EventTwoImage}
+                />
+                <div className="absolute top-0 left-0 w-full h-full flex justify-center items-center opacity-0 transition-opacity duration-300 pointer-events-none overlay">
+                  <div className="text-white flex items-center justify-center">
+                    <i className="fas fa-play-circle text-4xl"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <h2 className="section-heading text-2xl text-center uppercase mb-8">
+              Personal Social Content Page
+            </h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-12">
+              {/* Social 1 */}
+              <a href="https://www.instagram.com/p/C2Ffz0xN1s6/" target="_blank" rel="noopener noreferrer">
+                <div className="relative image-container fade-in">
+                  <img
+                    alt="Gallery image 7"
+                    className="w-full h-64 object-cover"
+                    src={SocialOneImage}
+                  />
+                  <div className="absolute top-0 left-0 w-full h-full flex justify-center items-center opacity-0 transition-opacity duration-300 pointer-events-none overlay">
+                    <div className="text-white flex items-center justify-center">
+                      <i className="fab fa-instagram text-4xl"></i>
+                    </div>
+                  </div>
+                </div>
+              </a>
+
+              {/* Social 2 */}
+              <a href="https://www.instagram.com/p/C3alfkJovZk/" target="_blank" rel="noopener noreferrer">
+                <div className="relative image-container fade-in">
+                  <img
+                    alt="Gallery image 8"
+                    className="w-full h-64 object-cover"
+                    src={SocialTwoImage}
+                  />
+                  <div className="absolute top-0 left-0 w-full h-full flex justify-center items-center opacity-0 transition-opacity duration-300 pointer-events-none overlay">
+                    <div className="text-white flex items-center justify-center">
+                      <i className="fab fa-instagram text-4xl"></i>
+                    </div>
+                  </div>
+                </div>
+              </a>
+
+              {/* Social 3 */}
+              <a href="https://www.instagram.com/p/C6MR1b8SeGq/" target="_blank" rel="noopener noreferrer">
+                <div className="relative image-container fade-in">
+                  <img
+                    alt="Gallery image 9"
+                    className="w-full h-64 object-cover"
+                    src={SocialThreeImage}
+                  />
+                  <div className="absolute top-0 left-0 w-full h-full flex justify-center items-center opacity-0 transition-opacity duration-300 pointer-events-none overlay">
+                    <div className="text-white flex items-center justify-center">
+                      <i className="fab fa-instagram text-4xl"></i>
+                    </div>
+                  </div>
+                </div>
+              </a>
+            </div>
+
+            <h2 className="section-heading text-2xl text-center uppercase mb-8">
+              Music Videos
+            </h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-12">
+              {/* Music 1 */}
+              <div
+                className="relative image-container fade-in"
+                onClick={() => openPopup('https://www.youtube.com/embed/ZcQq9CGWev0?rel=0')}
+              >
+                <img
+                  alt="Gallery image 7"
+                  className="w-full h-64 object-cover"
+                  src={MusicOneImage}
+                />
+                <div className="absolute top-0 left-0 w-full h-full flex justify-center items-center opacity-0 transition-opacity duration-300 pointer-events-none overlay">
+                  <div className="text-white flex items-center justify-center">
+                    <i className="fas fa-play-circle text-4xl"></i>
+                  </div>
+                </div>
+              </div>
+
+              {/* Music 2 */}
+              <div
+                className="relative image-container fade-in"
+                onClick={() => openPopup('https://www.youtube.com/embed/cU2FfP4UuOo?rel=0')}
+              >
+                <img
+                  alt="Gallery image 8"
+                  className="w-full h-64 object-cover"
+                  src={MusicTwoImage}
+                />
+                <div className="absolute top-0 left-0 w-full h-full flex justify-center items-center opacity-0 transition-opacity duration-300 pointer-events-none overlay">
+                  <div className="text-white flex items-center justify-center">
+                    <i className="fas fa-play-circle text-4xl"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+
+        <div
+          id="popup-modal"
+          className="fixed inset-0 bg-black bg-opacity-90 flex justify-center items-center hidden z-50"
+          style={{ backdropFilter: "blur(5px)" }}
+        >
+          <div className="bg-white rounded-lg shadow-2xl max-w-4xl w-full">
+            <div className="relative">
+              <iframe
+                width="100%"
+                height="600px"
+                src=""
+                title="YouTube video player"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                className="rounded-t-lg"
+              ></iframe>
+              <button
+                id="close-modal"
+                className="absolute top-3 right-3 text-white hover:text-gray-300 bg-black bg-opacity-50 hover:bg-opacity-70 rounded-full p-2 transition-all duration-300"
+              >
+                <i className="fas fa-times"></i>
+              </button>
+            </div>
+          </div>
         </div>
-        <span> &copy; 2025 Priyesh Thakur </span>
-      </footer>
+
+        <Footer />
+      </div>
     </>
   );
 };
